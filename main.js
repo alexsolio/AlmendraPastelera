@@ -1,7 +1,8 @@
 alert("Bienvenido a Almendra Pastelera")
 let respuesta = prompt("¿Es tu primera vez en nuestra web? si/no").toLowerCase();
 function enviarCorreo (email){
-    alert (`Recibirás nuestras promociones en la casilla de ${email}`)
+    alert (`Recibirás nuestras promociones en la casilla de ${email}
+    Descubre nuestras recetas en el Menú`)
 }
 
 while (respuesta !== "si" && respuesta !== "no"){
@@ -9,7 +10,7 @@ while (respuesta !== "si" && respuesta !== "no"){
     respuesta = prompt("¿Es tu primera vez en nuestra web? si/no").toLowerCase();
     }
     if (respuesta === "no"){
-        alert("¡Bienvenido de vuelta! Me alegra verte de nuevo por acá");
+        alert("¡Bienvenido de vuelta! Haz tu pedido en nuestro Menú");
     }else{
         let promociones = prompt("¡Bienvenido! ¿Quieres mantenerte informado acerca de nuestras promociones? si/no").toLowerCase();
     
