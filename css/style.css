@@ -307,4 +307,28 @@ h2 {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-/*# sourceMappingURL=style.css.map */
+.button-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.button-container button {
+  width: 30px;
+}
+
+#carrito-list li {
+  margin-bottom: 5px; /* Puedes ajustar el espacio entre elementos según tus preferencias */
+}
+
+#carrito-list li strong {
+  font-weight: bold; /* Esto hace que solo los nombres estén en negrita */
+}
+
+#carrito-container p {
+  font-weight: bold; 
+}
+
+.oculto {
+  display: none;
+}

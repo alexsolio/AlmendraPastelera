@@ -1,29 +1,212 @@
-alert("Bienvenido a Almendra Pastelera")
-let respuesta = prompt("¿Es tu primera vez en nuestra web? si/no").toLowerCase();
-function enviarCorreo (email){
-    alert (`Recibirás nuestras promociones en la casilla de ${email}
-    Descubre nuestras recetas en el Menú`)
+const tortasClasicas = [
+    {
+        id: 1,
+        nombre: "Lemon Pie",
+        descripcion: "Masa dulce rellena con crema de limón y cubierta con merengue italiano.",
+        precio: 10000,
+        imagen: "../multimedia/imagenes/algarrobo.jpg",
+        cantidad: 1
+    },
+    {
+        id: 2,
+        nombre: "Crumble de manzana",
+        descripcion: "Manzanas horneadas con una capa crujiente y dorada.",
+        precio: 12000,
+        imagen: "../multimedia/imagenes/crumble.jpg",
+        cantidad: 1
+    },
+    {
+        id: 3,
+        nombre: "Rogel",
+        descripcion: "Finos discos de masa cubiertos con dulce de leche y merengue italiano.",
+        precio: 9000,
+        imagen: "../multimedia/imagenes/rogel.jpg",
+        cantidad: 1
+    },
+    {
+        id: 4,
+        nombre: "Marquise",
+        descripcion: "Base de marquise de chocolate, cubierta con dulce de leche, crema y frutos rojos.",
+        precio: 8000,
+        imagen: "../multimedia/imagenes/torta.jpg",
+        cantidad: 1
+    },
+    {
+        id: 5,
+        nombre: "Ricota",
+        descripcion: "Masa dulce rellena con crema de ricota.",
+        precio: 8000,
+        imagen: "../multimedia/imagenes/algarrobo.jpg",
+        cantidad: 1
+    },
+];
+
+const carritoContainer = document.getElementById("carrito-container");
+const carritoList = document.getElementById("carrito-list");
+const totalPrecio = document.getElementById("total-precio");
+let carrito = [];
+let total = 0;
+
+const contenedorPrincipal = document.createElement("div");
+contenedorPrincipal.classList.add("contenedor-comida");
+
+tortasClasicas.forEach((item) => {
+    let div = document.createElement("div");
+    div.classList.add("tortas-clasicas");
+
+    const imagen = document.createElement("img");
+    imagen.src = item.imagen;
+    imagen.alt = item.nombre;
+    imagen.classList.add("imagen-menu");
+
+    const nombre = document.createElement("h4");
+    nombre.textContent = item.nombre;
+
+    const precio = document.createElement("h5");
+    precio.textContent = `$${item.precio}`;
+
+    const botonAgregar = document.createElement("button");
+    botonAgregar.textContent = "Agregar al carrito";
+
+    botonAgregar.addEventListener("click", () => {
+        agregarAlCarrito({ ...item, cantidad: 1 });
+    });
+
+    div.appendChild(imagen);
+    div.appendChild(nombre);
+    div.appendChild(precio);
+    div.appendChild(botonAgregar);
+
+    contenedorPrincipal.appendChild(div);
+});
+
+document.body.appendChild(contenedorPrincipal);
+
+const botonVaciarCarrito = document.getElementById("vaciar-carrito");
+
+botonVaciarCarrito.addEventListener("click", () => {
+    carrito = [];
+    total = 0;
+    actualizarCarrito();
+    actualizarColorCarrito();
+    alert("Carrito vacío.");
+});
+
+function agregarAlCarrito(item) {
+    const existente = carrito.find((producto) => producto.id === item.id);
+
+    if (existente) {
+        existente.cantidad++;
+    } else {
+        carrito.push(item);
+    }
+
+    total += item.precio;
+    actualizarCarrito();
 }
 
-while (respuesta !== "si" && respuesta !== "no"){
-    alert("Responde con si o no")
-    respuesta = prompt("¿Es tu primera vez en nuestra web? si/no").toLowerCase();
+function incrementarCantidad(item) {
+    item.cantidad++;
+    total += item.precio;
+    actualizarCarrito();
+}
+
+function decrementarCantidad(item) {
+    if (item.cantidad > 1) {
+        item.cantidad--;
+        total -= item.precio;
+        actualizarCarrito();
     }
-    if (respuesta === "no"){
-        alert("¡Bienvenido de vuelta! Haz tu pedido en nuestro Menú");
-    }else{
-        let promociones = prompt("¡Bienvenido! ¿Quieres mantenerte informado acerca de nuestras promociones? si/no").toLowerCase();
+}
+
+function actualizarCarrito() {
+    carritoList.innerHTML = "";
+    carrito.forEach((item) => {
+        const li = document.createElement("li");
+        const nombreCantidad = document.createElement("span");
+        nombreCantidad.textContent = `${item.nombre} x ${item.cantidad}`;
+        const precio = document.createElement("span");
+        precio.textContent = `$${item.precio * item.cantidad}`;
+
+        // Botón para eliminar
+        const botonEliminar = document.createElement("button");
+        botonEliminar.textContent = "x";
+        botonEliminar.addEventListener("click", () => eliminarProducto(item));
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("button-container");
+
+        const botonIncrementar = document.createElement("button");
+        botonIncrementar.textContent = "+";
+        botonIncrementar.addEventListener("click", () => incrementarCantidad(item));
+
+        const botonDecrementar = document.createElement("button");
+        botonDecrementar.textContent = "-";
+        botonDecrementar.addEventListener("click", () => decrementarCantidad(item));
+
+        buttonContainer.appendChild(botonIncrementar);
+        buttonContainer.appendChild(botonDecrementar);
+        buttonContainer.appendChild(botonEliminar); // Agregar el botón de eliminar
+
+        li.appendChild(nombreCantidad);
+        li.appendChild(precio);
+        li.appendChild(buttonContainer);
+        carritoList.appendChild(li);
+    });
+
+    totalPrecio.textContent = `${total}`;
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    function actualizarColorCarrito() {
+        const carritoTitulo = document.getElementById("carrito-titulo");
+        if (carrito.length > 0) {
+            carritoTitulo.style.color = "green"; 
+        } else {
+            carritoTitulo.style.color = "orange"; 
+        }
+    }
     
-        while (promociones === "si"){
-            let correo = prompt("Ingresa tu e-mail").toLowerCase();
-                if(!correo.includes("@")){
-                    alert("Correo incorrecto")
-                }else{
-                    enviarCorreo(correo)
-                    break;
-                }
-        }
-        if (promociones !== "si"){
-            alert("Descubre nuestras recetas en el Menú");
-        }
+    // Llamar a la función para configurar el color del título al cargar la página
+    actualizarColorCarrito();
     }
+
+// Función para eliminar un producto
+function eliminarProducto(item) {
+    const index = carrito.indexOf(item);
+    if (index !== -1) {
+        total -= item.precio * item.cantidad;
+        carrito.splice(index, 1);
+        actualizarCarrito();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const abrirCarritoBtn = document.getElementById("abrir-carrito");
+    const menuCarrito = document.getElementById("contenido-carrito");
+
+    abrirCarritoBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        menuCarrito.classList.toggle("oculto");
+    });
+
+    const cerrarCarritoBtn = document.getElementById("cerrar-carrito");
+    cerrarCarritoBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        menuCarrito.classList.add("oculto");
+    });
+});
+
+// Inicializar el carrito al cargar la página
+document.addEventListener("DOMContentLoaded", function () {
+    inicializarCarrito();
+});
+
+function inicializarCarrito() {
+    const carritoGuardado = localStorage.getItem("carrito");
+    if (carritoGuardado) {
+        carrito = JSON.parse(carritoGuardado);
+        total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+        actualizarCarrito();
+    }
+}
