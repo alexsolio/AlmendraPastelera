@@ -4,7 +4,7 @@
         "nombre": "Lemon Pie",
         "descripcion": "Masa dulce rellena con crema de limón y cubierta con merengue italiano.",
         "precio": 10000,
-        "imagen": "../multimedia/imagenes/algarrobo.jpg",
+        "imagen": "./multimedia/imagenes/algarrobo.jpg",
         "cantidad": 1
     },
     {
@@ -12,7 +12,7 @@
         "nombre": "Crumble de manzana",
         "descripcion": "Manzanas horneadas con una capa crujiente y dorada.",
         "precio": 12000,
-        "imagen": "../multimedia/imagenes/crumble.jpg",
+        "imagen": "./multimedia/imagenes/crumble.jpg",
         "cantidad": 1
     },
     {
@@ -20,7 +20,7 @@
         "nombre": "Rogel",
         "descripcion": "Finos discos de masa cubiertos con dulce de leche y merengue italiano.",
         "precio": 9000,
-        "imagen": "../multimedia/imagenes/rogel.jpg",
+        "imagen": "./multimedia/imagenes/rogel.jpg",
         "cantidad": 1
     },
     {
@@ -36,7 +36,7 @@
         "nombre": "Ricota",
         "descripcion": "Masa dulce rellena con crema de ricota.",
         "precio": 8000,
-        "imagen": "../multimedia/imagenes/algarrobo.jpg",
+        "imagen": "./multimedia/imagenes/algarrobo.jpg",
         "cantidad": 1
     }
 ]
