@@ -75,7 +75,13 @@ botonVaciarCarrito.addEventListener("click", () => {
     total = 0;
     actualizarCarrito();
     actualizarColorCarrito();
-    alert("Carrito vacío.");
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Carrito vacío",
+        showConfirmButton: false,
+        timer: 1500
+      });
 });
 
 function agregarAlCarrito(item) {
